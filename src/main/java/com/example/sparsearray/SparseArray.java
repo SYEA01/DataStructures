@@ -2,6 +2,9 @@ package com.example.sparsearray;
 
 import java.io.*;
 
+/**
+ * 二维数组转稀疏数组、稀疏数组转二维数组
+ */
 public class SparseArray {
     public static void main(String[] args) throws IOException {
         // 1、先创建一个原始的二维数组 11 * 11

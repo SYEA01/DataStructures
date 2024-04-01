@@ -30,7 +30,23 @@ public class SingleLinkedListDemo {
         // 测试修改节点的代码
         HeroNode newHeroNode = new HeroNode(2, "小卢", "玉麒麟~~");
         singleLinkedList.update(newHeroNode);
+        singleLinkedList.list();
 
+
+        System.out.println("=====================删除一个节点1====================");
+        singleLinkedList.delete(1);
+        singleLinkedList.list();
+
+        System.out.println("=====================删除一个节点4====================");
+        singleLinkedList.delete(4);
+        singleLinkedList.list();
+
+        System.out.println("=====================删除一个节点2====================");
+        singleLinkedList.delete(2);
+        singleLinkedList.list();
+
+        System.out.println("=====================删除一个节点3====================");
+        singleLinkedList.delete(3);
         singleLinkedList.list();
 
 
@@ -110,7 +126,7 @@ class SingleLinkedList {
         boolean flag = false;  // 标识是否找到该节点
         while (true) {
             if (temp == null) {
-                break;  // 链表已经遍历结束
+                break;  // 链表已经遍历结束,仍没有找到需要修改的节点
             }
             if (temp.no == newHeroNode.no) {  // 说明已经找到需要修改的节点了
                 flag = true;
@@ -124,7 +140,31 @@ class SingleLinkedList {
         } else {  // 没有找到需要修改的节点
             System.out.printf("没有找到编号%d 的节点，不能修改\n", newHeroNode.no);
         }
+    }
 
+    /**
+     * 删除节点
+     * 1、head不能动，因此需要一个辅助节点temp
+     * 2、比较temp.next.no 与 待删除节点的no进行比较
+     */
+    public void delete(int no) {
+        HeroNode temp = head;
+        boolean flag = false;  // 标识 是否找到待删除节点
+        while (true) {
+            if (temp.next == null) {
+                break;  // 已经到链表的最后
+            }
+            if (temp.next.no == no) {  // 已经找到了待删除节点的前一个节点temp
+                flag = true;
+                break;
+            }
+            temp = temp.next;
+        }
+        if (flag) {  // 已经找到了待删除节点的前一个节点temp
+            temp.next = temp.next.next;
+        } else {
+            System.out.printf("要删除的 %d 节点不存在\n", no);
+        }
     }
 
 

@@ -43,6 +43,10 @@ public class SingleLinkedListDemo {
 
         System.out.println("链表中节点的个数：" + getLength(singleLinkedList.getHead()));
 
+        System.out.printf("=========================测试是否得到了倒数第%d个节点==============================\n", 3);
+        // 测试是否得到了倒数第k个节点
+        HeroNode res = findLastKNode(singleLinkedList.getHead(), 3);
+        System.out.println("res = " + res);
 
     }
 
@@ -63,6 +67,28 @@ public class SingleLinkedListDemo {
             cur = cur.next;
         }
         return length;
+    }
+
+    /**
+     * 查找单链表中的倒数第k个结点
+     *
+     * @param head 头节点
+     * @param k    k
+     * @return 单链表中的倒数第k个结点
+     */
+    public static HeroNode findLastKNode(HeroNode head, int k) {
+        if (head.next == null) {
+            return null;
+        }
+        int len = getLength(head);
+        if (len < k) {
+            return null;
+        }
+        HeroNode temp = head.next;  // temp指向第一个节点
+        for (int i = 0; i < len - k; i++) {
+            temp = temp.next;
+        }
+        return temp;
     }
 }
 

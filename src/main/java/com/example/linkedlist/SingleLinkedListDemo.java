@@ -1,5 +1,7 @@
 package com.example.linkedlist;
 
+import java.util.Stack;
+
 /**
  * 单链表
  */
@@ -20,10 +22,17 @@ public class SingleLinkedListDemo {
         singleLinkedList.add(hero3);
         singleLinkedList.list();
 
-        // 测试单链表的反转
-        System.out.println("反转后的链表。。");
-        reverseList2(singleLinkedList.getHead());
+        // 逆序打印链表
+        System.out.println("逆序打印链表");
+        reversePrintList(singleLinkedList.getHead());
+        System.out.println("链表结构");
         singleLinkedList.list();
+
+
+//        // 测试单链表的反转
+//        System.out.println("反转后的链表。。");
+//        reverseList2(singleLinkedList.getHead());
+//        singleLinkedList.list();
 
 
 //        singleLinkedList.addByOrder(hero1);
@@ -140,6 +149,26 @@ public class SingleLinkedListDemo {
         }
         head.next = pre;
         return pre;
+    }
+
+    /**
+     * 逆序打印链表
+     *
+     * @param head
+     */
+    public static void reversePrintList(HeroNode head) {
+        HeroNode temp = head.next;
+        if (temp == null || temp.next == null) {
+            System.out.println(temp);
+        }
+        Stack<HeroNode> stack = new Stack<>();
+        while (temp != null) {
+            stack.push(temp);
+            temp = temp.next;
+        }
+        while (!stack.isEmpty()) {
+            System.out.println(stack.pop());
+        }
     }
 }
 

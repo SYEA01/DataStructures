@@ -13,20 +13,26 @@ public class SingleLinkedListDemo {
 
         // 创建一个链表
         SingleLinkedList singleLinkedList = new SingleLinkedList();
-//        // 加入
-//        singleLinkedList.add(hero1);
-//        singleLinkedList.add(hero4);
-//        singleLinkedList.add(hero2);
-//        singleLinkedList.add(hero3);
-//        singleLinkedList.list();
-
-        singleLinkedList.addByOrder(hero1);
-        singleLinkedList.addByOrder(hero4);
-        singleLinkedList.addByOrder(hero2);
-        singleLinkedList.addByOrder(hero3);
+        // 加入
+        singleLinkedList.add(hero1);
+        singleLinkedList.add(hero4);
+        singleLinkedList.add(hero2);
+        singleLinkedList.add(hero3);
         singleLinkedList.list();
 
-        System.out.println("=======================修改后===========================");
+        // 测试单链表的反转
+        System.out.println("反转后的链表。。");
+        reverseList2(singleLinkedList.getHead());
+        singleLinkedList.list();
+
+
+//        singleLinkedList.addByOrder(hero1);
+//        singleLinkedList.addByOrder(hero4);
+//        singleLinkedList.addByOrder(hero2);
+//        singleLinkedList.addByOrder(hero3);
+//        singleLinkedList.list();
+
+/*        System.out.println("=======================修改后===========================");
         // 测试修改节点的代码
         HeroNode newHeroNode = new HeroNode(2, "小卢", "玉麒麟~~");
         singleLinkedList.update(newHeroNode);
@@ -46,7 +52,7 @@ public class SingleLinkedListDemo {
         System.out.printf("=========================测试是否得到了倒数第%d个节点==============================\n", 3);
         // 测试是否得到了倒数第k个节点
         HeroNode res = findLastKNode(singleLinkedList.getHead(), 3);
-        System.out.println("res = " + res);
+        System.out.println("res = " + res);*/
 
     }
 
@@ -89,6 +95,51 @@ public class SingleLinkedListDemo {
             temp = temp.next;
         }
         return temp;
+    }
+
+    /**
+     * 反转链表
+     *
+     * @param head
+     * @return
+     */
+    public static HeroNode reverseList(HeroNode head) {
+        if (head.next == null || head.next.next == null) {
+            return head;
+        }
+        HeroNode cur = head.next;  // 定义一个辅助指针，用于遍历链表
+        HeroNode reverseNode = new HeroNode(0, "", "");
+        while (cur != null) {
+            HeroNode next = cur.next;  // 记录下一个
+            cur.next = reverseNode.next;
+            reverseNode.next = cur;
+            cur = next;  // 移动指针
+
+        }
+        head.next = reverseNode.next;
+        return head;
+    }
+
+    /**
+     * 反转链表
+     *
+     * @param head
+     * @return
+     */
+    public static HeroNode reverseList2(HeroNode head) {
+        if (head.next == null || head.next.next == null) {
+            return head;
+        }
+        HeroNode cur = head.next;
+        HeroNode pre = null;
+        while (cur != null) {
+            HeroNode next = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = next;
+        }
+        head.next = pre;
+        return pre;
     }
 }
 

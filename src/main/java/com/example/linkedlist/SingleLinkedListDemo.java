@@ -7,6 +7,7 @@ import java.util.Stack;
  */
 public class SingleLinkedListDemo {
     public static void main(String[] args) {
+        System.out.println("链表1");
         // 测试
         HeroNode hero1 = new HeroNode(1, "宋江", "及时雨");
         HeroNode hero2 = new HeroNode(2, "卢俊义", "玉麒麟");
@@ -17,16 +18,35 @@ public class SingleLinkedListDemo {
         SingleLinkedList singleLinkedList = new SingleLinkedList();
         // 加入
         singleLinkedList.add(hero1);
-        singleLinkedList.add(hero4);
         singleLinkedList.add(hero2);
         singleLinkedList.add(hero3);
+        singleLinkedList.add(hero4);
         singleLinkedList.list();
 
-        // 逆序打印链表
-        System.out.println("逆序打印链表");
-        reversePrintList(singleLinkedList.getHead());
-        System.out.println("链表结构");
-        singleLinkedList.list();
+        System.out.println("链表2");
+        HeroNode hero21 = new HeroNode(2, "卢俊义", "玉麒麟");
+        HeroNode hero22 = new HeroNode(7, "张三", "周三周四");
+        // 创建一个链表
+        SingleLinkedList singleLinkedList2 = new SingleLinkedList();
+        // 加入
+        singleLinkedList2.add(hero21);
+        singleLinkedList2.add(hero22);
+        singleLinkedList2.list();
+
+        System.out.println("合并后的链表");
+        HeroNode mergeNode = mergeList(singleLinkedList.getHead(), singleLinkedList2.getHead());
+        HeroNode temp = mergeNode.next;
+        while (temp != null) {
+            System.out.println(temp);
+            temp = temp.next;
+        }
+
+
+//        // 逆序打印链表
+//        System.out.println("逆序打印链表");
+//        reversePrintList(singleLinkedList.getHead());
+//        System.out.println("链表结构");
+//        singleLinkedList.list();
 
 
 //        // 测试单链表的反转
@@ -169,6 +189,44 @@ public class SingleLinkedListDemo {
         while (!stack.isEmpty()) {
             System.out.println(stack.pop());
         }
+    }
+
+    /**
+     * 合并两个有序的链表，合并完成之后的链表依然有序
+     *
+     * @param head1
+     * @param head2
+     * @return
+     */
+    public static HeroNode mergeList(HeroNode head1, HeroNode head2) {
+        if (head1.next == null) {
+            return head2;
+        }
+        if (head2.next == null) {
+            return head1;
+        }
+        HeroNode res = new HeroNode(0, "", "");
+        HeroNode cur = res;
+        HeroNode h1 = head1.next;
+        HeroNode h2 = head2.next;
+        while (h1 != null && h2 != null) {
+            if (h1.no > h2.no) {
+                cur.next = h2;
+                h2 = h2.next;
+            } else {
+                cur.next = h1;
+                h1 = h1.next;
+            }
+            cur = cur.next;
+        }
+        if (h1 != null) {
+            cur.next = h1;
+        }
+        if (h2 != null) {
+            cur.next = h2;
+        }
+
+        return res;
     }
 }
 

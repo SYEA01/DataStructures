@@ -14,21 +14,20 @@ public class DoubleLinkedListDemo {
         DoubleLinkedList doubleLinkedList = new DoubleLinkedList();
         doubleLinkedList.add(hero1);
         doubleLinkedList.add(hero2);
-        doubleLinkedList.add(hero3);
         doubleLinkedList.add(hero4);
-
+        doubleLinkedList.add2(hero3);
         doubleLinkedList.list();
-
-        // 修改测试
-        HeroNode2 heroUpdate = new HeroNode2(4, "公孙胜", "入云龙");
-        doubleLinkedList.update(heroUpdate);
-        System.out.println("修改后的链表：");
-        doubleLinkedList.list();
-
-        // 删除测试
-        doubleLinkedList.delete(3);
-        System.out.println("删除后的链表：");
-        doubleLinkedList.list();
+//
+//        // 修改测试
+//        HeroNode2 heroUpdate = new HeroNode2(4, "公孙胜", "入云龙");
+//        doubleLinkedList.update(heroUpdate);
+//        System.out.println("修改后的链表：");
+//        doubleLinkedList.list();
+//
+//        // 删除测试
+//        doubleLinkedList.delete(3);
+//        System.out.println("删除后的链表：");
+//        doubleLinkedList.list();
 
     }
 }
@@ -124,6 +123,35 @@ class DoubleLinkedList {
             }
         } else {
             System.out.printf("没有找到编号为%d的节点，无法删除\n", no);
+        }
+    }
+
+    /**
+     * 按照编号顺序将节点插入双向链表
+     *
+     * @param heroNode
+     */
+    public void add2(HeroNode2 heroNode) {
+        HeroNode2 temp = head;
+        boolean flag = false;  // 找编号比待插入节点大的节点
+        while (true) {
+            if (temp.next == null) {  // 此时temp为最后一个节点
+                break;
+            }
+            if (temp.next.no > heroNode.no) {  // 此时temp下一个节点的no 比 待插入节点的no 大
+                flag = true;
+                break;
+            }
+            temp = temp.next;
+        }
+        if (flag) {  // 需要往temp 和 temp.next 中间插入
+            temp.next.pre = heroNode;
+            heroNode.next = temp.next;
+            temp.next = heroNode;
+            heroNode.pre = temp;
+        } else {  // 往末尾插入
+            temp.next = heroNode;
+            heroNode.pre = temp;
         }
     }
 

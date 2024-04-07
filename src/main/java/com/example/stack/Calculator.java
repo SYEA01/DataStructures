@@ -5,7 +5,7 @@ package com.example.stack;
  */
 public class Calculator {
     public static void main(String[] args) {
-        String expression = "7+2*6-4";
+        String expression = "7*2*2-5+1-5+3-4";
         // 创建两个栈，一个数字栈，一个符号栈
         ArrayStack2 numStack = new ArrayStack2(10);
         ArrayStack2 operStack = new ArrayStack2(10);
@@ -16,6 +16,7 @@ public class Calculator {
         int oper = 0;
         int res = 0;
         char ch = ' ';  // 将每次扫描得到的char保存到ch中
+        String keepNum = "";  // 用于拼接多位数
         // 循环扫描字符串
         while (index < expression.length()) {
             // 取出字符
@@ -38,7 +39,17 @@ public class Calculator {
                     operStack.push(ch);
                 }
             } else {  // 如果是数字
-                numStack.push(ch - 48);
+                keepNum += ch;
+                if (index == expression.length() - 1) {
+                    numStack.push(Integer.parseInt(keepNum));
+                } else {
+                    // 判断下一位是不是符号
+                    if (operStack.isOper(expression.substring(index + 1, index + 2).charAt(0))) {
+                        // 如果下一位是符号
+                        numStack.push(Integer.parseInt(keepNum));
+                        keepNum = "";
+                    }
+                }
             }
             // index索引+1
             index++;

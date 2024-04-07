@@ -12,6 +12,9 @@ public class Joseph {
         circleSingleLinkedList.add(5);
         circleSingleLinkedList.list();
 
+        System.out.println("======================================================");
+        circleSingleLinkedList.countJoseph(1, 2);
+
     }
 }
 
@@ -77,6 +80,41 @@ class CircleSingleLinkedList {
             }
             curr = curr.getNext();  // 移动指针
         }
+    }
+
+    /**
+     * 根据用户的输入，计算出 出圈的顺序
+     *
+     * @param k 从k开始
+     * @param m 数m下
+     */
+    public void countJoseph(int k, int m) {
+        if (first == null || k < 1) {
+            System.out.println("参数不正确");
+            return;
+        }
+        // 先准备好helper辅助指针指向first的前一个节点
+        Boy helper = first;
+        while (helper.getNext() != first) {
+            helper = helper.getNext();
+        }
+        // 从k开始
+        for (int i = 0; i < k - 1; i++) {
+            helper = helper.getNext();
+            first = first.getNext();
+        }
+        // 循环
+        while (first != helper) {
+            // 数m-1下
+            for (int i = 0; i < m - 1; i++) {
+                helper = helper.getNext();
+                first = first.getNext();
+            }
+            System.out.println("出列的节点是：" + first.getNo());
+            helper.setNext(first.getNext());
+            first = first.getNext();
+        }
+        System.out.println("最后一个节点是：" + first.getNo());
     }
 }
 

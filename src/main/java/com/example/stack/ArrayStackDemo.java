@@ -1,10 +1,48 @@
 package com.example.stack;
 
+import java.util.Scanner;
+
 /**
  * 使用数组模拟栈
  */
 public class ArrayStackDemo {
     public static void main(String[] args) {
+        // 测试
+        ArrayStack stack = new ArrayStack(4);
+        String key = "";
+        boolean loop = true;
+        Scanner scanner = new Scanner(System.in);
+        while (loop) {
+            System.out.println("show：表示显示栈");
+            System.out.println("exit：表示退出程序");
+            System.out.println("push：表示入栈");
+            System.out.println("pop：表示出栈");
+            System.out.println("请输入你的选择：");
+            key = scanner.next();
+            switch (key) {
+                case "show":
+                    stack.list();
+                    break;
+                case "push":
+                    System.out.print("请输入一个数： ");
+                    int value = scanner.nextInt();
+                    stack.push(value);
+                    break;
+                case "pop":
+                    try {
+                        int res = stack.pop();
+                        System.out.printf("取出的数据是：%d\n", res);
+                    } catch (Exception e) {
+                        System.out.println("e:" + e.getMessage());
+                    }
+                    break;
+                case "exit":
+                    scanner.close();
+                    loop = false;
+                    break;
+            }
+        }
+        System.out.println("程序退出");
 
     }
 }

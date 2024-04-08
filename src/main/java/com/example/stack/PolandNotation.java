@@ -11,8 +11,10 @@ import java.util.Stack;
 public class PolandNotation {
     public static void main(String[] args) {
         // 定义一个逆波兰表达式 (3+4)x5-6  ===>  3 4 + 5 x 6 -
+        // 定义一个逆波兰表达式 4x5-8+60+8/2  ===>  4 5 x 8 - 60 + 8 2 / +
         // 为了方便，逆波兰表达式的符号使用空格隔开
-        String suffixExpression = "3 4 + 5 x 6 - ";
+//        String suffixExpression = "3 4 + 5 x 6 - ";
+        String suffixExpression = "4 5 x 8 - 60 + 8 2 / +";
 
         // 1、先将3 4 + 5 x 6 -  放到ArrayList中
 

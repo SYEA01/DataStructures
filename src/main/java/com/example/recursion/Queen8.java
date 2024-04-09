@@ -13,7 +13,7 @@ public class Queen8 {
 
     public static void main(String[] args) {
         Queen8 queen8 = new Queen8();
-        queen8.check(0);
+        queen8.check(0);  // 0：从第一个皇后开始，一直到最后一个皇后
         System.out.printf("一共有%d种解法\n", count);
     }
 
@@ -30,7 +30,7 @@ public class Queen8 {
 
         // 依次放入皇后，并判断是否冲突
         for (int i = 0; i < max; i++) {
-            // 先把当前这个皇后n，放到该行的第1列
+            // 先把当前这个皇后n+1，放到该行的第i+1列
             array[n] = i;
             // 判断当放置第n个皇后到i列时，是否冲突
             if (judge(n)) {
@@ -48,9 +48,10 @@ public class Queen8 {
      * @return 是否ok
      */
     private boolean judge(int n) {
+        // 与前面的几个皇后进行比较
         for (int i = 0; i < n; i++) {
             // array[i] == array[n]    如果值相等，说明第n+1个皇后是否和前面的第i个皇后在同一列
-            // Math.abs(n - i) == Math.abs(array[n] - array[i])  说明第n+1个皇后是否和前面的第i个皇后在同一斜线
+            // Math.abs(n - i) == Math.abs(array[n] - array[i])  说明第n+1个皇后是否和前面的第i+1个皇后在同一斜线
             if (array[i] == array[n] || Math.abs(n - i) == Math.abs(array[n] - array[i])) {
                 return false;
             }

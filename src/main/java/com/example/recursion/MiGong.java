@@ -29,7 +29,7 @@ public class MiGong {
             System.out.println();
         }
 
-        setWay(map, 1, 1);
+        setWay2(map, 1, 1);
 
         System.out.println("结束的迷宫地图：");
         for (int i = 0; i < map.length; i++) {
@@ -84,5 +84,41 @@ public class MiGong {
         }
 
     }
+
+
+    /**
+     * 修改找路的策略，上-右-下-左
+     *
+     * @param map 表示地图迷宫
+     * @param i   表示从哪个位置开始找 (i,j)
+     * @param j   表示从哪个位置开始找 (i,j)
+     * @return 如果找到通路了，返回true；否则返回false
+     */
+    public static boolean setWay2(int[][] map, int i, int j) {
+        if (map[6][5] == 2) {  // 说明通路已经找到
+            return true;
+        } else {  // 此时没有找到通路
+            if (map[i][j] == 0) {  // 如果当前这个点还没有走过
+                // 按照策略走：在走迷宫时，先走下，下不通就走右，右不通再走上，上不通再走左。。如果该点走不通，再回溯
+                map[i][j] = 2;  // 先假定该点可以走通
+                if (setWay2(map, i - 1, j)) {  // 先向上走
+                    return true;
+                } else if (setWay2(map, i, j + 1)) {  // 向上走不通，向右走
+                    return true;
+                } else if (setWay2(map, i + 1, j)) {  // 向右走不通，向下走
+                    return true;
+                } else if (setWay2(map, i, j - 1)) {  // 向下走不通，向左走
+                    return true;
+                } else {  // 走不通，回溯
+                    map[i][j] = 3;  // 走不通，置为3
+                    return false;
+                }
+            } else {  // 如果map[i][j]!=0，有3种情况：1（墙），2（已经走过），3（此路不通），不论是哪一种情况，这条路都不可能走了，所以直接返回false
+                return false;
+            }
+        }
+
+    }
+
 }
 

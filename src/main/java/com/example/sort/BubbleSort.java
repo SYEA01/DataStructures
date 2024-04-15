@@ -1,19 +1,32 @@
 package com.example.sort;
 
-import java.util.Arrays;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * 冒泡排序
+ * 排序前 = 2024-04-15 17:54:21
+ * 排序后 = 2024-04-15 17:54:30
+ * 80000条数据花费9秒
  */
 public class BubbleSort {
     public static void main(String[] args) {
-        int[] arr = {0, 5, 3, 7, 2};
-        System.out.println("排序前的数组 = " + Arrays.toString(arr));
+//        int[] arr = {0, 5, 3, 7, 2};
+//        System.out.println("排序前的数组 = " + Arrays.toString(arr));
 
+        // 测试冒泡排序的速度O(n^2)
+        int[] arr = new int[80000];
+        for (int i = 0; i < 80000; i++) {
+            arr[i] = (int) (Math.random() * 8000000);  // 生成 [0,800000) 的随机数
+        }
+        Date date1 = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        System.out.println("排序前 = " + sdf.format(date1));
 
         bubbleSort(arr);
 
-        System.out.println("排序后的数组 = " + Arrays.toString(arr));
+        Date date2 = new Date();
+        System.out.println("排序后 = " + sdf.format(date2));
 
 
     }

@@ -1,18 +1,32 @@
 package com.example.sort;
 
-import java.util.Arrays;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * 选择排序
+ * 排序前 = 2024-04-16 14:43:03
+ * 排序后 = 2024-04-16 14:43:05
+ * 80000条数据花费2秒
  */
 public class SelectSort {
     public static void main(String[] args) {
-        int[] arr = {5, 9, 3, 7, 1,-1,90,123};
+//        int[] arr = {5, 9, 3, 7, 1, -1, 90};
+
+        int[] arr = new int[80000];
+        for (int i = 0; i < 80000; i++) {
+            arr[i] = (int) (Math.random() * 8000000);
+        }
+        Date date1 = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        System.out.println("排序前 = " + sdf.format(date1));
 
         // 选择排序  时间复杂度 O(n^2)
         selectSort(arr);
 
-        System.out.println(Arrays.toString(arr));
+        Date date2 = new Date();
+        System.out.println("排序后 = " + sdf.format(date2));
+
     }
 
     /**
@@ -38,7 +52,6 @@ public class SelectSort {
                 arr[index] = arr[i];
                 arr[i] = min;
             }
-            System.out.println("第" + (i + 1) + "轮：" + Arrays.toString(arr));
         }
     }
 }

@@ -90,13 +90,17 @@ public class OrderTest {
      */
     public static void insertSort(int[] arr) {
         for (int i = 1; i < arr.length; i++) {
-            for (int j = 0; j < i; j++) {
-                if (arr[j] > arr[i]) {
-                    int temp = arr[j];
-                    arr[j] = arr[i];
-                    arr[i] = temp;
-                }
+            int val = arr[i];
+            int index = i - 1;
+            while (index >= 0 && val < arr[index]) {
+                arr[index + 1] = arr[index];
+                index--;
             }
+
+            if (index != i - 1) {
+                arr[index + 1] = val;
+            }
+
             System.out.println("第" + i + "次排序：" + Arrays.toString(arr));
         }
     }

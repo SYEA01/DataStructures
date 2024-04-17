@@ -7,9 +7,9 @@ public class OrderTest2 {
         int[] arr1 = new int[]{30, 3, 79, 40, 55, 33, 66};
         int[] arr2 = new int[]{30, 3, 79, 40, 55, 33, 66};
         int[] arr3 = new int[]{30, 3, 79, 40, 55, 33, 66};
-        System.out.println("冒泡排序前 = " + Arrays.toString(arr1));
+        System.out.println("排序前 = " + Arrays.toString(arr1));
         insertSort(arr1);
-        System.out.println("冒泡排序后 = " + Arrays.toString(arr1));
+        System.out.println("排序后 = " + Arrays.toString(arr1));
         System.out.println();
 
     }
@@ -55,12 +55,14 @@ public class OrderTest2 {
 
     public static void insertSort(int[] arr) {
         for (int i = 1; i < arr.length; i++) {
-            for (int j = 0; j < i; j++) {
-                if (arr[i] < arr[j]) {
-                    int temp = arr[i];
-                    arr[i] = arr[j];
-                    arr[j] = temp;
-                }
+            int val = arr[i];
+            int index = i - 1;
+            while (index >= 0 && val < arr[index]) {
+                arr[index + 1] = arr[index];
+                index--;
+            }
+            if (index != i - 1) {
+                arr[index + 1] = val;
             }
             System.out.println(Arrays.toString(arr));
         }

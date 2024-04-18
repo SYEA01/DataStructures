@@ -17,13 +17,13 @@ import java.util.Date;
  */
 public class ShellSort {
     public static void main(String[] args) {
-//        int[] arr = {8, 9, 1, 7, 2, 3, 5, 4, 6, 0};
+        int[] arr = {8, 9, 1, 7, 2, 3, 5, 4, 6, 0};
 
         //
-        int[] arr = new int[80000];
-        for (int i = 0; i < 80000; i++) {
-            arr[i] = (int) (Math.random() * 8000000);  // 生成 [0,800000) 的随机数
-        }
+//        int[] arr = new int[80000];
+//        for (int i = 0; i < 80000; i++) {
+//            arr[i] = (int) (Math.random() * 8000000);  // 生成 [0,800000) 的随机数
+//        }
         Date date1 = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         System.out.println("排序前 = " + sdf.format(date1));
@@ -117,6 +117,7 @@ public class ShellSort {
                     arr[j] = temp;
                 }
             }
+            System.out.println(Arrays.toString(arr));
         }
     }
 }

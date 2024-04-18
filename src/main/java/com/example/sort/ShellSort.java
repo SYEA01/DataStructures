@@ -5,10 +5,15 @@ import java.util.Arrays;
 import java.util.Date;
 
 /**
- * 希尔排序
+ * 希尔排序 (交换式)
  * 排序前 = 2024-04-17 17:35:45
  * 排序后 = 2024-04-17 17:35:50
  * 80000 条数据耗时5秒
+ * <p>
+ * 希尔排序 (移位式)
+ * 排序前 = 2024-04-17 17:52:39
+ * 排序后 = 2024-04-17 17:52:39
+ * 80000 条数据耗时不到1秒
  */
 public class ShellSort {
     public static void main(String[] args) {
@@ -23,7 +28,7 @@ public class ShellSort {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         System.out.println("排序前 = " + sdf.format(date1));
 
-        shellSort(arr);
+        shellSort2(arr);
 
         Date date2 = new Date();
         System.out.println("排序后 = " + sdf.format(date2));
@@ -94,5 +99,24 @@ public class ShellSort {
 
     }
 
-
+    // 对交换式的希尔排序进行优化-->移位法
+    public static void shellSort2(int[] arr) {
+        // 设置增量gap，并逐渐缩小增量
+        for (int gap = arr.length; gap > 0; gap /= 2) {
+            // 从第gap个元素开始，逐个对其所在的组进行直接插入排序
+            for (int i = gap; i < arr.length; i++) {
+                int j = i;
+                int temp = arr[j];  // 记录待插入的数据
+                if (arr[j] < arr[j - gap]) {  // 如果这个待插入的数比 它前面的数小
+                    while (j - gap >= 0 && temp < arr[j - gap]) {  // 如果这个组里还有数据，并且这个待插入的数 比 组里的这个数据小
+                        // 移动
+                        arr[j] = arr[j - gap];
+                        j -= gap;
+                    }
+                    // 退出while循环，代表找到位置了
+                    arr[j] = temp;
+                }
+            }
+        }
+    }
 }

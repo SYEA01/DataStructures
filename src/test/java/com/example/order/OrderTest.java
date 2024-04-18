@@ -104,4 +104,25 @@ public class OrderTest {
             System.out.println("第" + i + "次排序：" + Arrays.toString(arr));
         }
     }
+
+
+    public static void shellSort(int[] arr) {
+        // 设置初始增量为数组的一半，并逐渐缩小
+        for (int gap = arr.length / 2; gap > 0; gap /= 2) {
+            // 开始插入排序
+            for (int i = gap; i < arr.length; i++) {
+                int val = arr[i];  // 当前待插入元素
+                int preIndex = i - gap;  // 待插入元素前一个 gap 间隔位置的索引
+                // 循环找可以插入的位置
+                while (preIndex >= 0 && val < arr[preIndex]) {
+                    arr[preIndex + gap] = arr[preIndex];  // 将有序列表的值往后移
+                    preIndex -= gap;  // 向前移动索引，继续查找
+                }
+                // // 若 preIndex 发生变化，插入 val 到 preIndex + gap 位置
+                if (preIndex != i - gap) {
+                    arr[preIndex + gap] = val;
+                }
+            }
+        }
+    }
 }

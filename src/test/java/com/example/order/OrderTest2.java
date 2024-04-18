@@ -5,10 +5,8 @@ import java.util.Arrays;
 public class OrderTest2 {
     public static void main(String[] args) {
         int[] arr1 = new int[]{30, 3, 79, 40, 55, 33, 66};
-        int[] arr2 = new int[]{30, 3, 79, 40, 55, 33, 66};
-        int[] arr3 = new int[]{30, 3, 79, 40, 55, 33, 66};
         System.out.println("排序前 = " + Arrays.toString(arr1));
-        insertSort(arr1);
+        shellSort(arr1);
         System.out.println("排序后 = " + Arrays.toString(arr1));
         System.out.println();
 
@@ -65,6 +63,24 @@ public class OrderTest2 {
                 arr[index + 1] = val;
             }
             System.out.println(Arrays.toString(arr));
+        }
+    }
+
+    public static void shellSort(int[] arr) {
+        for (int gap = arr.length / 2; gap > 0; gap /= 2) {
+            for (int i = gap; i < arr.length; i++) {
+                int val = arr[i];
+                int preIndex = i - gap;
+                while (preIndex >= 0 && val < arr[preIndex]) {
+                    arr[preIndex + gap] = arr[preIndex];
+                    preIndex -= gap;
+                }
+                if (preIndex != i - gap) {
+                    arr[preIndex + gap] = val;
+                }
+                System.out.println(Arrays.toString(arr));
+            }
+            System.out.println();
         }
     }
 }

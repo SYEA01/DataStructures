@@ -7,7 +7,7 @@ import java.util.Arrays;
  */
 public class QuickSort {
     public static void main(String[] args) {
-        int[] arr = {0, 5, 9, 7, 2};
+        int[] arr = {5, 3, 8, 6, 2, 7, 1, 4};
         quickSort(arr, 0, arr.length - 1);
         System.out.println("排序后的结果: " + Arrays.toString(arr));
     }
@@ -42,9 +42,11 @@ public class QuickSort {
             arr[r] = temp;
 
             // 如果交换完之后，发现 arr[l] == pivot , r--
+            // 这里就表示：如果在交换前 arr[r] = pivot 了，那么交换后arr[l] == pivot，此时arr[r]的值就是原来arr[l]的值，就代表右边r所代表的值已经交换过了，为了避免后面再次比较pivot与arr[r] 的值。
             if (arr[l] == pivot) {
                 r--;
             }
+            // 这里就表示：如果在交换前 arr[l] = pivot 了，那么交换后arr[r] == pivot，此时arr[l]的值就是原来arr[r]的值
             if (arr[r] == pivot) {
                 l++;
             }

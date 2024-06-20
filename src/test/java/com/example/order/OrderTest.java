@@ -182,7 +182,6 @@ public class OrderTest {
             }
         }
 
-        // 3、如果l==r，为了避免死循环，需要移动指针
         if (l == r) {
             l++;
             r--;

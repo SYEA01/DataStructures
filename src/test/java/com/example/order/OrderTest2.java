@@ -7,9 +7,10 @@ public class OrderTest2 {
         int[] arr1 = new int[]{30, 3, 79, 40, 55, 33, 66};
         System.out.println("排序前 = " + Arrays.toString(arr1));
 //        shellSort(arr1);
-        int length = arr1.length;
-        int[] temp = new int[length];
-        mergeSort(arr1, 0, length - 1, temp);
+//        int length = arr1.length;
+//        int[] temp = new int[length];
+//        mergeSort(arr1, 0, length - 1, temp);
+        radixSort(arr1);
         System.out.println("排序后 = " + Arrays.toString(arr1));
         System.out.println();
 
@@ -171,6 +172,46 @@ public class OrderTest2 {
         while (tempLeft <= right) {
             arr[tempLeft++] = temp[t++];
         }
+    }
 
+
+    public static void radixSort(int[] arr) {
+        int length = arr.length;
+        // 1、首先找到最大位数
+        int max = arr[0];
+        for (int i = 1; i < length; i++) {
+            if (arr[i] > max) {
+                max = arr[i];
+            }
+        }
+        int maxLength = (max + "").length();
+
+        // 2、定义一个二维数组，代表10个桶
+        int[][] bucket = new int[10][length];
+        // 3、定义一个一维数组，表示桶中的元素个数
+        int[] bucketElementCount = new int[10];
+
+        // 4、遍历每一位，往桶中放元素
+        for (int i = 0, n = 1; i < maxLength; i++, n *= 10) {
+            for (int j = 0; j < length; j++) {
+                // 首先得到那一位的数字
+                int element = arr[j] / n % 10;
+                // 给桶中存放
+                bucket[element][bucketElementCount[element]] = arr[j];
+                bucketElementCount[element]++;
+            }
+
+            // 往原数组中放入
+            int index = 0;
+            for (int l = 0; l < bucket.length; l++) {
+                if (bucketElementCount[l] > 0) {
+                    for (int k = 0; k < bucketElementCount[l]; k++) {
+                        arr[index++] = bucket[l][k];
+                    }
+                }
+                bucketElementCount[l] = 0;
+            }
+            System.out.println("第" + (i + 1) + "轮：" + Arrays.toString(arr));
+        }
     }
 }

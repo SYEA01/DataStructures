@@ -10,7 +10,10 @@ public class OrderTest3 {
 //        bubbleSort(arr);
 //        selectSort(arr);
 //        insertSort(arr);
-        shellSort(arr);
+//        shellSort(arr);
+//        int[] temp = new int[arr.length];
+//        mergeSort(arr, 0, arr.length - 1, temp);
+        radixSort(arr);
         System.out.println("排序后：" + Arrays.toString(arr));
     }
 
@@ -98,10 +101,88 @@ public class OrderTest3 {
                     insertIndex -= gap;
                 }
                 if (insertIndex != i - gap) {
-                    arr[insertIndex+gap] = insertValue;
+                    arr[insertIndex + gap] = insertValue;
                 }
             }
         }
     }
+
+    /**
+     * 归并排序
+     *
+     * @param arr
+     * @param left
+     * @param right
+     * @param temp
+     */
+    public static void mergeSort(int[] arr, int left, int right, int[] temp) {
+        if (left < right) {
+            int mid = (left + right) / 2;
+            mergeSort(arr, left, mid, temp);
+            mergeSort(arr, mid + 1, right, temp);
+            merge(arr, left, mid, right, temp);
+        }
+    }
+
+    private static void merge(int[] arr, int left, int mid, int right, int[] temp) {
+        int i = left;
+        int j = mid + 1;
+        int t = 0;
+
+        while (i <= mid && j <= right) {
+            if (arr[i] >= arr[j]) {
+                temp[t++] = arr[j++];
+            } else {
+                temp[t++] = arr[i++];
+            }
+        }
+
+        while (i <= mid) {
+            temp[t++] = arr[i++];
+        }
+        while (j <= right) {
+            temp[t++] = arr[j++];
+        }
+
+        t = 0;
+        int tempLeft = left;
+        while (tempLeft <= right) {
+            arr[tempLeft++] = temp[t++];
+        }
+    }
+
+    public static void radixSort(int[] arr) {
+        int max = arr[0];
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] > max) {
+                max = arr[i];
+            }
+        }
+        int maxLength = (max + "").length();
+
+        int[][] bucket = new int[10][arr.length];
+        int[] bucketElementCount = new int[10];
+        for (int i = 0, n = 1; i < maxLength; i++, n *= 10) {
+            // 给桶里放
+            for (int j = 0; j < arr.length; j++) {
+                int element = arr[j] / n % 10;
+                bucket[element][bucketElementCount[element]] = arr[j];
+                bucketElementCount[element]++;
+            }
+            // 从桶里取
+            int index = 0;
+            // 先遍历这10个桶
+            for (int k = 0; k < bucket.length; k++) {
+                // 然后判断哪个桶里有数据
+                if (bucketElementCount[k] > 0) {
+                    for (int l = 0; l < bucketElementCount[k]; l++) {
+                        arr[index++] = bucket[k][l];
+                    }
+                }
+            }
+            System.out.println("第" + (i + 1) + "轮：" + Arrays.toString(arr));
+        }
+    }
+
 
 }

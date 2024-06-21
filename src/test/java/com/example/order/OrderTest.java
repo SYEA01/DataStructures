@@ -13,6 +13,7 @@ public class OrderTest {
         int[] arr4 = new int[]{30, 3, 79, 40, 55, 33, 66};
         int[] arr5 = new int[]{30, 3, 79, 40, 55, 33, 66};
         int[] arr6 = new int[]{30, 3, 79, 40, 55, 33, 66};
+        int[] arr7 = new int[]{30, 3, 79, 40, 55, 33, 66};
         System.out.println("冒泡排序前 = " + Arrays.toString(arr1));
         bubbleSort(arr1);
         System.out.println("冒泡排序后 = " + Arrays.toString(arr1));
@@ -53,6 +54,13 @@ public class OrderTest {
         int[] temp = new int[arr6.length];
         mergeSort(arr6, 0, arr5.length - 1, temp);
         System.out.println("归并排序后 = " + Arrays.toString(arr6));
+
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println("基数排序前 = " + Arrays.toString(arr7));
+        radixSort(arr7);
+        System.out.println("基数排序后 = " + Arrays.toString(arr7));
     }
 
     /**
@@ -205,6 +213,14 @@ public class OrderTest {
         }
     }
 
+    /**
+     * 归并排序
+     *
+     * @param arr
+     * @param left
+     * @param right
+     * @param temp
+     */
     public static void mergeSort(int[] arr, int left, int right, int[] temp) {
         if (left < right) {
             int mid = (left + right) / 2;
@@ -252,6 +268,51 @@ public class OrderTest {
             arr[leftIndex] = temp[t];
             leftIndex++;
             t++;
+        }
+    }
+
+    /**
+     * 基数排序
+     *
+     * @param arr
+     */
+    public static void radixSort(int[] arr) {
+        int length = arr.length;
+        if (length < 2) {
+            return;
+        }
+        // 首先先找到这个数组中最大数的位数
+        int max = arr[0];
+        for (int i = 1; i < length; i++) {
+            if (arr[i] > max) {
+                max = arr[i];
+            }
+        }
+        int maxLength = (max + "").length();
+
+        // 然后定义一个二维数组，代表10个桶  0-9
+        int[][] bucket = new int[10][length];
+        // 定义一个一维数组，表示这10个桶中元素的个数
+        int[] bucketElementCount = new int[10];
+
+        // 然后从个位数开始依次去每一位，并将其放入到对于的桶中
+        for (int i = 0, n = 1; i < maxLength; i++, n *= 10) {
+            for (int j = 0; j < length; j++) {
+                int element = arr[j] / n % 10;
+                bucket[element][bucketElementCount[element]] = arr[j];
+                bucketElementCount[element]++;
+            }
+            // 放回原数组
+            int index = 0;
+            for (int k = 0; k < 10; k++) {
+                if (bucketElementCount[k] != 0) {
+                    for (int l = 0; l < bucketElementCount[k]; l++) {
+                        arr[index++] = bucket[k][l];
+                    }
+                }
+                bucketElementCount[k] = 0;
+            }
+            System.out.println("第" + (i + 1) + "轮处理：" + Arrays.toString(arr));
         }
 
 

@@ -12,6 +12,7 @@ public class OrderTest {
         int[] arr3 = new int[]{30, 3, 79, 40, 55, 33, 66};
         int[] arr4 = new int[]{30, 3, 79, 40, 55, 33, 66};
         int[] arr5 = new int[]{30, 3, 79, 40, 55, 33, 66};
+        int[] arr6 = new int[]{30, 3, 79, 40, 55, 33, 66};
         System.out.println("冒泡排序前 = " + Arrays.toString(arr1));
         bubbleSort(arr1);
         System.out.println("冒泡排序后 = " + Arrays.toString(arr1));
@@ -44,6 +45,14 @@ public class OrderTest {
         System.out.println("快速排序前 = " + Arrays.toString(arr5));
         quickSort(arr5, 0, arr5.length - 1);
         System.out.println("快速排序后 = " + Arrays.toString(arr5));
+
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println("归并排序前 = " + Arrays.toString(arr6));
+        int[] temp = new int[arr6.length];
+        mergeSort(arr6, 0, arr5.length - 1, temp);
+        System.out.println("归并排序后 = " + Arrays.toString(arr6));
     }
 
     /**
@@ -194,5 +203,57 @@ public class OrderTest {
         if (r > left) {
             quickSort(arr, left, r);
         }
+    }
+
+    public static void mergeSort(int[] arr, int left, int right, int[] temp) {
+        if (left < right) {
+            int mid = (left + right) / 2;
+            // 向左拆分
+            mergeSort(arr, left, mid, temp);
+
+            // 向右拆分
+            mergeSort(arr, mid + 1, right, temp);
+
+            merge(arr, left, mid, right, temp);
+        }
+    }
+
+    public static void merge(int[] arr, int left, int mid, int right, int[] temp) {
+        int i = left;
+        int j = mid + 1;
+        int t = 0;
+
+        while (i <= mid && j <= right) {
+            if (arr[i] <= arr[j]) {
+                temp[t] = arr[i];
+                t++;
+                i++;
+            } else {
+                temp[t] = arr[j];
+                t++;
+                j++;
+            }
+        }
+
+        while (i <= mid) {
+            temp[t] = arr[i];
+            t++;
+            i++;
+        }
+        while (j <= right) {
+            temp[t] = arr[j];
+            t++;
+            j++;
+        }
+
+        t = 0;
+        int leftIndex = left;
+        while (leftIndex <= right) {
+            arr[leftIndex] = temp[t];
+            leftIndex++;
+            t++;
+        }
+
+
     }
 }

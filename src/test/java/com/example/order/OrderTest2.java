@@ -6,7 +6,10 @@ public class OrderTest2 {
     public static void main(String[] args) {
         int[] arr1 = new int[]{30, 3, 79, 40, 55, 33, 66};
         System.out.println("排序前 = " + Arrays.toString(arr1));
-        shellSort(arr1);
+//        shellSort(arr1);
+        int length = arr1.length;
+        int[] temp = new int[length];
+        mergeSort(arr1, 0, length - 1, temp);
         System.out.println("排序后 = " + Arrays.toString(arr1));
         System.out.println();
 
@@ -126,5 +129,48 @@ public class OrderTest2 {
         if (r > left) {
             quickSort(arr, left, r);
         }
+    }
+
+
+    public static void mergeSort(int[] arr, int left, int right, int[] temp) {
+        if (left >= right) {
+            return;
+        }
+        int mid = (left + right) / 2;
+        // 向左右分别递归
+        mergeSort(arr, left, mid, temp);
+        mergeSort(arr, mid + 1, right, temp);
+
+        merge(arr, left, mid, right, temp);
+    }
+
+    private static void merge(int[] arr, int left, int mid, int right, int[] temp) {
+        int i = left;
+        int j = mid + 1;
+        int t = 0;
+
+        while (i <= mid && j <= right) {
+            if (arr[i] >= arr[j]) {
+                temp[t++] = arr[j++];
+            } else {
+                temp[t++] = arr[i++];
+            }
+        }
+
+        // 如果某一个有剩余的，就将剩余的添加进temp中
+        while (i <= mid) {
+            temp[t++] = arr[i++];
+        }
+        while (j <= right) {
+            temp[t++] = arr[j++];
+        }
+
+        // temp已经是有序的了，将temp重新填充到arr中
+        t = 0;
+        int tempLeft = left;
+        while (tempLeft <= right) {
+            arr[tempLeft++] = temp[t++];
+        }
+
     }
 }

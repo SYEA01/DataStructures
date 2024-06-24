@@ -4,9 +4,12 @@ import java.util.Arrays;
 
 public class OrderTest4 {
     public static void main(String[] args) {
-        int[] arr =  {8, 9, 1, 7, 2, 3, 5, 4, 6, 0};
+        int[] arr = {8, 9, 1, 7, 2, 3, 5, 4, 6, 0};
         System.out.println("排序前: " + Arrays.toString(arr));
-        shellSort(arr);
+        radixSort(arr);
+//        int[] temp = new int[arr.length];
+//        mergeSort(arr, 0, arr.length - 1, temp);
+        System.out.println("排序后: " + Arrays.toString(arr));
 
     }
 
@@ -80,6 +83,71 @@ public class OrderTest4 {
                 System.out.println(Arrays.toString(arr));
             }
             System.out.println();
+        }
+    }
+
+    public static void mergeSort(int[] arr, int left, int right, int[] temp) {
+        if (left < right) {
+            int mid = (left + right) / 2;
+            mergeSort(arr, left, mid, temp);
+            mergeSort(arr, mid + 1, right, temp);
+            merge(arr, left, mid, right, temp);
+        }
+    }
+
+    private static void merge(int[] arr, int left, int mid, int right, int[] temp) {
+        int i = left;
+        int j = mid + 1;
+        int t = 0;
+        while (i <= mid && j <= right) {
+            if (arr[i] >= arr[j]) {
+                temp[t++] = arr[j++];
+            } else {
+                temp[t++] = arr[i++];
+            }
+        }
+        while (i <= mid) {
+            temp[t++] = arr[i++];
+        }
+        while (j <= right) {
+            temp[t++] = arr[j++];
+        }
+        t = 0;
+        int leftIndex = left;
+        while (leftIndex <= right) {
+            arr[leftIndex++] = temp[t++];
+        }
+    }
+
+    public static void radixSort(int[] arr) {
+        int max = arr[0];
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] > max) {
+                max = arr[i];
+            }
+        }
+        int maxLength = (max + "").length();
+
+        int[][] bucket = new int[10][arr.length];
+        int[] bucketElementCount = new int[10];
+
+        for (int i = 0, n = 1; i < maxLength; i++, n *= 10) {
+            for (int j = 0; j < arr.length; j++) {
+                int element = arr[j] / n % 10;
+                bucket[element][bucketElementCount[element]] = arr[j];
+                bucketElementCount[element]++;
+            }
+
+            int index = 0;
+            for (int k = 0; k < 10; k++) {
+                if (bucketElementCount[k] > 0) {
+                    for (int l = 0; l < bucketElementCount[k]; l++) {
+                        arr[index++] = bucket[k][l];
+                    }
+                }
+                bucketElementCount[k] = 0;
+            }
+            System.out.println("第" + (i + 1) + "轮: " + Arrays.toString(arr));
         }
     }
 }

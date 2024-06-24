@@ -6,8 +6,8 @@ public class OrderTest7 {
     public static void main(String[] args) {
         int[] arr = new int[]{79, 40, 55, 30, 3, 33, 66};
         System.out.println("排序前：" + Arrays.toString(arr));
-//        shellSort(arr);
-        quickSort(arr, 0, arr.length - 1);
+        bubbleSort(arr);
+//        quickSort(arr, 0, arr.length - 1);
         System.out.println("排序后：" + Arrays.toString(arr));
     }
 
@@ -20,7 +20,7 @@ public class OrderTest7 {
         for (int i = 0; i < arr.length - 1; i++) {
             int temp;
             boolean flag = false;
-            for (int j = i; j < arr.length - 1 - i; j++) {
+            for (int j = 0; j < arr.length - 1 - i; j++) {
                 if (arr[j] > arr[j + 1]) {
                     flag = true;
                     temp = arr[j];

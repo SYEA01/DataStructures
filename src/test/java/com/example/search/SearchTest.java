@@ -6,8 +6,10 @@ import java.util.List;
 public class SearchTest {
     public static void main(String[] args) {
         int[] arr = {1, 15, 15, 15, 15, 19, 31, 36, 57, 234};
-        List<Integer> result = binarySearch2(arr, 0, arr.length - 1, 15);
-        System.out.println("result = " + result);
+//        List<Integer> result = binarySearch2(arr, 0, arr.length - 1, 15);
+//        System.out.println("result = " + result);
+        int i = insertValueSearch(arr, 0, arr.length - 1, 15);
+        System.out.println("i = " + i);
     }
 
     /**
@@ -37,9 +39,9 @@ public class SearchTest {
     /**
      * 二分查找 - 返回所有符合的元素的下标
      *
-     * @param arr 数组
-     * @param left 左索引
-     * @param right 右索引
+     * @param arr    数组
+     * @param left   左索引
+     * @param right  右索引
      * @param target 要查找的数
      * @return
      */
@@ -66,5 +68,23 @@ public class SearchTest {
             mid = (left + right) / 2;
         }
         return list;
+    }
+
+    public static int insertValueSearch(int[] arr, int left, int right, int target) {
+        if (left > right || arr[left] > target || arr[right] < target) {
+            return -1;
+        }
+        int mid = left + (right - left) * (target - arr[left]) / (arr[right] - arr[left]);
+        while (left <= right) {
+            if (arr[mid] > target) {
+                right = mid - 1;
+            } else if (arr[mid] < target) {
+                left = mid + 1;
+            } else {
+                return mid;
+            }
+            mid = left + (right - left) * (target - arr[left]) / (arr[right] - arr[left]);
+        }
+        return -1;
     }
 }

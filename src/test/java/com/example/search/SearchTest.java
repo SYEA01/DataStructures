@@ -1,14 +1,16 @@
 package com.example.search;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class SearchTest {
     public static void main(String[] args) {
-        int[] arr = {1, 15, 15, 15, 15, 19, 31, 36, 57, 234};
+        int[] arr = {1, 15, 19, 31, 36, 57, 234};
 //        List<Integer> result = binarySearch2(arr, 0, arr.length - 1, 15);
 //        System.out.println("result = " + result);
-        int i = insertValueSearch(arr, 0, arr.length - 1, 15);
+//        int i = insertValueSearch(arr, 0, arr.length - 1, 15);
+        int i = fibonacciSearch(arr, 19);
         System.out.println("i = " + i);
     }
 
@@ -85,6 +87,59 @@ public class SearchTest {
             }
             mid = left + (right - left) * (target - arr[left]) / (arr[right] - arr[left]);
         }
+        return -1;
+    }
+
+    /**
+     * 构造一个斐波那契数列
+     *
+     * @return 1, 1, 2, 3, 5, 8, 13, 21, 34
+     */
+    private static int[] fibonacci() {
+        int[] fib = new int[20];
+        fib[0] = 1;
+        fib[1] = 1;
+        for (int i = 2; i < 20; i++) {
+            fib[i] = fib[i - 1] + fib[i - 2];
+        }
+        return fib;
+    }
+
+    public static int fibonacciSearch(int[] arr, int target) {
+        int[] f = fibonacci();
+        int left = 0;
+        int right = arr.length - 1;
+        int k = 0;
+        int mid = 0;
+
+        while (right > f[k] - 1) {
+            k++;
+        }
+
+        int[] temp = Arrays.copyOf(arr, f[k]);
+        for (int i = right + 1; i < f[k]; i++) {
+            temp[i] = arr[right];
+        }
+
+
+        while (left <= right) {
+            mid = left + f[k - 1] - 1;
+            if (target > temp[mid]) {
+                left = mid + 1;
+                k -= 2;
+            } else if (target < temp[mid]) {
+                right = mid - 1;
+                k--;
+            } else {
+                if (mid <= right) {
+                    return mid;
+                } else {
+                    return right;
+                }
+            }
+        }
+
+
         return -1;
     }
 }

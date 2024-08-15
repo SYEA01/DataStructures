@@ -32,7 +32,7 @@ public class ThreadedBinaryTreeDemo {
 //        System.out.println("使用线索化方式来遍历线索化二叉树");
 //        threadedBinaryTree.infixThreadedList();
 
-/**/
+        /**/
         // 前序线索化
         threadedBinaryTree.preThreaded();
         // 前序遍历线索化二叉树
@@ -96,6 +96,9 @@ class ThreadedBinaryTree {
 
     /**
      * 遍历 中序线索化二叉树
+     * 1、一直找到最左边的节点，然后打印该节点。
+     * 2、如果该节点有右子节点，继续按照上面的步骤操作右子节点。
+     * 3、如果该节点没有右子节点，就一直遍历后继节点，直到没有后继节点为止。
      */
     public void infixThreadedList() {
         // 定义一个变量，存储当前遍历的节点
@@ -117,7 +120,7 @@ class ThreadedBinaryTree {
                 System.out.println(node);
             }
 
-            // 替换这个遍历的节点
+            // 如果当前节点的右指针指向的是子树，就替换这个遍历的节点，再重新查找leftType=1的节点
             node = node.getRight();
         }
     }
@@ -169,21 +172,20 @@ class ThreadedBinaryTree {
 
     /**
      * 遍历 前序线索化二叉树
+     * 1、如果当前节点有左子节点下一步到到当前节点的左子节点。
+     * 2、如果当前节点没有左子节点，下一步到当前节点的右子节点。注意这里的右子节点并不一定是真正的右子节点，也有可能是我们线索化的时候串起来的。所以这里不需要判断究竟是右子节点还是后继节点。
      */
     public void preThreadedList() {
         HeroNode node = root;
-        // 首先输出node节点
-        System.out.println("node = " + node);
 
         while (node != null) {
-            while (node.getLeftType() == 0) {
-                node = node.getLeft();
-                System.out.println("node = " + node);
-            }
-            while (node.getRightType() == 1) {
-                node = node.getRight();
-                System.out.println("node = " + node);
-            }
+            System.out.println("node = " + node);
+//            if (node.getLeftType() == 0) {
+//                node = node.getLeft();
+//            }else {
+//                node = node.getRight();
+//            }
+            node = (node.getLeftType() == 0) ? node.getLeft() : node.getRight();
         }
     }
 }

@@ -32,12 +32,17 @@ public class ThreadedBinaryTreeDemo {
 //        System.out.println("使用线索化方式来遍历线索化二叉树");
 //        threadedBinaryTree.infixThreadedList();
 
-        /**/
+/*
         // 前序线索化
         threadedBinaryTree.preThreaded();
         // 前序遍历线索化二叉树
         threadedBinaryTree.preThreadedList();
+*/
 
+        // 后序线索化
+        threadedBinaryTree.postThreaded();  // 8 10 3 14 6 1
+        System.out.println();
+        threadedBinaryTree.postThreadedList();
     }
 }
 
@@ -188,6 +193,60 @@ class ThreadedBinaryTree {
             node = (node.getLeftType() == 0) ? node.getLeft() : node.getRight();
         }
     }
+
+    /**
+     * 后序线索化二叉树
+     *
+     * @param node
+     */
+    public void postThreaded(HeroNode node) {
+        if (node == null) {
+            return;
+        }
+        postThreaded(node.getLeft());
+        postThreaded(node.getRight());
+
+        if (node.getLeft() == null) {
+            node.setLeft(pre);
+            node.setLeftType(1);
+        }
+        if (pre != null && pre.getRight() == null) {
+            pre.setRight(node);
+            pre.setRightType(1);
+        }
+        pre = node;
+    }
+
+    public void postThreaded() {
+        this.postThreaded(root);
+    }
+
+    /**
+     * 遍历后序线索化二叉树
+     */
+    public void postThreadedList() {
+        HeroNode node = root;
+
+        while (node != null) {
+            while (node.getLeftType() == 0) {
+                node.getLeft().setParent(node);  // 记录父节点
+                node = node.getLeft();
+            }
+            System.out.println("node = " + node);
+
+            while (node.getRightType() == 1) {
+                node = node.getRight();
+                System.out.println("node = " + node);
+            }
+
+            // 回到父节点
+            node = node.getParent();
+            // 因为根节点的parent是null，所以这里如果到了根节点了，就没有parent了，就更不会有right了
+            if (node != null && node.getRightType() == 0) {
+                node = node.getRight();
+            }
+        }
+    }
 }
 
 
@@ -197,6 +256,9 @@ class HeroNode {
     private String name;
     private HeroNode left;
     private HeroNode right;
+
+    // 后序遍历用的  记录父节点
+    private HeroNode parent;
 
     // 定义两个新的属性  用于标识是否是子树或者节点
     // 1、如果leftType=0 表示左子树。如果leftType=1 表示前驱节点
@@ -241,6 +303,14 @@ class HeroNode {
         this.right = right;
     }
 
+    public HeroNode getParent() {
+        return parent;
+    }
+
+    public void setParent(HeroNode parent) {
+        this.parent = parent;
+    }
+
     public int getLeftType() {
         return leftType;
     }
@@ -264,6 +334,7 @@ class HeroNode {
                 ", name='" + name + '\'' +
                 ", leftType=" + leftType +
                 ", rightType=" + rightType +
+                ", parent=" + parent +
                 '}';
     }
 }

@@ -6,18 +6,38 @@ package com.example.tree.threadedbinarytree;
  */
 public class ThreadedBinaryTreeDemo {
     public static void main(String[] args) {
-        // 测试 中序线索二叉树的功能是否正确
-        HeroNode root = new HeroNode(1, "tom");
-        HeroNode node2 = new HeroNode(3, "jack");
-        HeroNode node3 = new HeroNode(6, "smith");
-        HeroNode node4 = new HeroNode(8, "mary");
-        HeroNode node5 = new HeroNode(10, "king");
-        HeroNode node6 = new HeroNode(14, "dim");
+//        // 测试 中序线索二叉树的功能是否正确
+//        HeroNode root = new HeroNode(1, "tom");
+//        HeroNode node2 = new HeroNode(3, "jack");
+//        HeroNode node3 = new HeroNode(6, "smith");
+//        HeroNode node4 = new HeroNode(8, "mary");
+//        HeroNode node5 = new HeroNode(10, "king");
+//        HeroNode node6 = new HeroNode(14, "dim");
+//        root.setLeft(node2);
+//        root.setRight(node3);
+//        node2.setLeft(node4);
+//        node2.setRight(node5);
+//        node3.setLeft(node6);
+
+        HeroNode root = new HeroNode(4);
+        HeroNode node2 = new HeroNode(3);
+        HeroNode node3 = new HeroNode(6);
+        HeroNode node4 = new HeroNode(1);
+        HeroNode node5 = new HeroNode(5);
+        HeroNode node6 = new HeroNode(8);
+        HeroNode node7 = new HeroNode(0);
+        HeroNode node8 = new HeroNode(2);
+        HeroNode node9 = new HeroNode(7);
+        HeroNode node10 = new HeroNode(9);
         root.setLeft(node2);
         root.setRight(node3);
         node2.setLeft(node4);
-        node2.setRight(node5);
-        node3.setLeft(node6);
+        node4.setLeft(node7);
+        node4.setRight(node8);
+        node3.setLeft(node5);
+        node3.setRight(node6);
+        node6.setLeft(node9);
+        node6.setRight(node10);
 
         // 测试线索化
         ThreadedBinaryTree threadedBinaryTree = new ThreadedBinaryTree();
@@ -32,17 +52,17 @@ public class ThreadedBinaryTreeDemo {
 //        System.out.println("使用线索化方式来遍历线索化二叉树");
 //        threadedBinaryTree.infixThreadedList();
 
-/*
+/**/
         // 前序线索化
         threadedBinaryTree.preThreaded();
         // 前序遍历线索化二叉树
         threadedBinaryTree.preThreadedList();
-*/
 
-        // 后序线索化
-        threadedBinaryTree.postThreaded();  // 8 10 3 14 6 1
-        System.out.println();
-        threadedBinaryTree.postThreadedList();
+
+//        // 后序线索化
+//        threadedBinaryTree.postThreaded();  // 8 10 3 14 6 1
+//        System.out.println();
+//        threadedBinaryTree.postThreadedList();
     }
 }
 
@@ -265,6 +285,10 @@ class HeroNode {
     // 2、如果rightType=0 表示右子树。如果rightType=1 表示后继节点
     private int leftType;
     private int rightType;
+
+    public HeroNode(int no) {
+        this.no = no;
+    }
 
     public HeroNode(int no, String name) {
         this.no = no;
